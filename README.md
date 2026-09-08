@@ -1,4 +1,4 @@
-# Boundary Atlas
+# Depgraph
 
 [Open the live demo](https://dicnunz.github.io/demos/boundary-atlas/)
 
