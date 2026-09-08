@@ -63,7 +63,7 @@ export function GraphView({ graph, highlightedIds, selectedNodeId, onSelect, onR
             nodeLabel={() => ''}
             linkDirectionalArrowLength={4}
             linkDirectionalArrowRelPos={0.88}
-            linkColor={() => '#44616f'}
+            linkColor={() => '#8da7b1'}
             linkWidth={1.2}
             onEngineStop={() => {
               if (!fitted.current) { fit(); fitted.current = true; }
@@ -74,12 +74,15 @@ export function GraphView({ graph, highlightedIds, selectedNodeId, onSelect, onR
               const radius = highlighted ? 6 : 4.5;
               context.beginPath();
               context.arc(node.x ?? 0, node.y ?? 0, radius, 0, 2 * Math.PI);
-              context.fillStyle = highlighted ? '#f4c36e' : '#79babc';
+              context.fillStyle = highlighted ? '#125f75' : '#fff';
               context.fill();
+              context.strokeStyle = highlighted ? "#125f75" : "#688b99";
+              context.lineWidth = 1.5 / scale;
+              context.stroke();
               if (node.id === selectedNodeId) {
                 context.beginPath();
                 context.arc(node.x ?? 0, node.y ?? 0, radius + 3, 0, 2 * Math.PI);
-                context.strokeStyle = '#f4c36e';
+                context.strokeStyle = '#125f75';
                 context.lineWidth = 1 / scale;
                 context.stroke();
               }
@@ -87,7 +90,7 @@ export function GraphView({ graph, highlightedIds, selectedNodeId, onSelect, onR
                 const fontSize = 11 / scale;
                 const label = node.path.split('/').slice(-2).join('/');
                 context.font = `${fontSize}px ui-monospace, monospace`;
-                context.fillStyle = highlighted ? '#ffe1aa' : '#c0d0d5';
+                context.fillStyle = highlighted ? '#173f51' : '#4b6e7d';
                 context.fillText(label, (node.x ?? 0) + radius + 3, (node.y ?? 0) + fontSize / 3);
               }
             }}

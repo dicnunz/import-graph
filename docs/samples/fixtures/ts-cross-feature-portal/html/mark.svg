@@ -1,12 +1,1 @@
-<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="160" height="160" rx="36" fill="#08121A"/>
-  <path d="M28 114C44 91 62 81 82 81C103 81 119 90 132 108" stroke="#FFD166" stroke-width="4" stroke-linecap="round"/>
-  <path d="M24 95C40 72 58 61 80 61C102 61 122 72 137 93" stroke="#FFD166" stroke-opacity="0.72" stroke-width="4" stroke-linecap="round"/>
-  <path d="M22 75C39 49 59 36 81 36C106 36 126 49 141 72" stroke="#FFD166" stroke-opacity="0.38" stroke-width="4" stroke-linecap="round"/>
-  <path d="M38 124L58 104L76 113L102 69L122 88" stroke="#7DCFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="38" cy="124" r="7" fill="#7DCFFF"/>
-  <circle cx="58" cy="104" r="7" fill="#7DCFFF"/>
-  <circle cx="76" cy="113" r="7" fill="#FFD166"/>
-  <circle cx="102" cy="69" r="9" fill="#77E0B5"/>
-  <circle cx="122" cy="88" r="7" fill="#7DCFFF"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><g fill="none" stroke="#125f75" stroke-width="2"><path d="M7 30V10h26v20H7l13-20 13 20M7 10l13 20 13-20"/><circle cx="7" cy="10" r="3" fill="#fff"/><circle cx="20" cy="30" r="3" fill="#fff"/><circle cx="33" cy="10" r="3" fill="#fff"/></g></svg>

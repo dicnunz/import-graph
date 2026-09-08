@@ -1,12 +1,12 @@
-# Import Graph
+# Tutte
 
 [Open the live demo](https://dicnunz.github.io/demos/boundary-atlas/)
 
-Boundary Atlas is a static import analyzer for TypeScript and JavaScript repositories. It parses real imports with `ts-morph`, builds file, folder, and package graphs, and turns them into findings you can export as JSON, Markdown, or an offline HTML viewer.
+Tutte is a static import analyzer for TypeScript and JavaScript repositories. It parses real imports with `ts-morph`, builds file, folder, and package graphs, and turns them into findings you can export as JSON, Markdown, or an offline HTML viewer.
 
 ## Detectors
 
-| Signal | What Boundary Atlas flags |
+| Signal | What Tutte flags |
 | --- | --- |
 | Cycles | strongly connected file, folder, or package graphs |
 | Deep imports | imports that bypass a public entrypoint and reach into internals |
@@ -54,11 +54,10 @@ Top findings:
 
 ## Screens
 
-![Boundary Atlas app home](docs/assets/app-home.png)
+![Tutte dependency map](docs/assets/app-home.png)
 
-![Boundary Atlas finding inspector](docs/assets/app-detail.png)
+![Tutte finding inspector](docs/assets/app-detail.png)
 
-![Boundary Atlas demo gif](docs/assets/demo.gif)
 
 ## Quick Start
 
@@ -124,7 +123,7 @@ Example reports are committed for inspection.
 
 ## Config
 
-Boundary Atlas auto-loads `boundary-atlas.config.json` from the target repo when present.
+Tutte auto-loads `boundary-atlas.config.json` from the target repo when present.
 
 Example:
 
@@ -145,7 +144,7 @@ Example:
 }
 ```
 
-`from` matches importer paths. `allow` matches target paths. If an import matches `from` but not `allow`, Boundary Atlas reports it as a boundary violation with the concrete edge evidence.
+`from` matches importer paths. `allow` matches target paths. If an import matches `from` but not `allow`, Tutte reports it as a boundary violation with the concrete edge evidence.
 
 ## Output Formats
 
@@ -192,8 +191,12 @@ npm run e2e
 
 ## Scope
 
-v1 is intentionally TS/JS-only. Boundary Atlas analyzes static imports, re-exports, public entrypoints, configured boundaries, and graph structure inside the repository you point it at.
+v1 is intentionally TS/JS-only. Tutte analyzes static imports, re-exports, public entrypoints, configured boundaries, and graph structure inside the repository you point it at.
 
 ## Project status
 
 AI-assisted personal project. Bundled examples and tests demonstrate a limited scope; they are not evidence of production use or independent validation.
+
+## Design
+
+The drawing-sheet layout uses circuit and [transit-diagram conventions](https://tfl.gov.uk/corporate/about-tfl/culture-and-heritage/harry-becks-tube-map): explicit connections, station-like nodes, and a single selection color. The name references Tutte’s [graph-drawing research](https://arxiv.org/abs/1201.3011). CLI, configuration and report contracts retain their existing names.

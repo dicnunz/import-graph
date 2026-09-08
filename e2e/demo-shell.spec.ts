@@ -10,7 +10,7 @@ test.describe('Boundary Atlas report viewer', () => {
     page.on('pageerror', (error) => errors.push(error.message));
     page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
     await page.goto('/');
-    await expect(page).toHaveTitle(/Boundary Atlas/i);
+    await expect(page).toHaveTitle(/Tutte/i);
     await expect(page.getByRole('heading', { name: 'ts-cross-feature-portal', exact: true })).toBeVisible();
     await expect(page.getByText('9 of 9 nodes · 10 edges', { exact: true })).toBeVisible();
     await expect(page.locator('.finding-card h3')).toContainText('Cross-feature fan-out from src/features/checkout');

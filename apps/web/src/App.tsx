@@ -142,9 +142,9 @@ export function App() {
   return (
     <main className="atlas-shell">
       <header className="atlas-header">
-        <a className="brand" href="#workspace" aria-label="Boundary Atlas report workspace">
+        <a className="brand" href="#workspace" aria-label="Tutte report workspace">
           <img src="./mark.svg" alt="" width="34" height="34" />
-          <span>Boundary Atlas<small>Architecture explorer</small></span>
+          <span>Tutte<small>Import graph</small></span>
         </a>
         <div className="atlas-actions">
           <span className="local-badge"><i /> Local report viewer</span>
@@ -167,7 +167,7 @@ export function App() {
         <div className="report-copy">
           <p className="eyebrow">{report?.kind === 'diff' ? 'Architecture comparison' : 'Repository analysis'}</p>
           <h1>{report?.project.label || 'Explore your architecture'}</h1>
-          <p>Trace dependencies and inspect structural findings in TypeScript and JavaScript repos.</p>
+
           <div className="report-meta"><span className="source-label" role="status">{source}</span>{report ? <time dateTime={report.generatedAt}>{new Date(report.generatedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' })} · UTC</time> : null}</div>
         </div>
         {report ? <dl className="summary-strip">
@@ -184,7 +184,7 @@ export function App() {
           <div className="explorer-column">
             <section className="graph-panel panel" aria-labelledby="graph-title">
               <div className="panel-header">
-                <div><p className="eyebrow">Dependency map</p><h2 id="graph-title">{granularity[0]!.toUpperCase() + granularity.slice(1)} view</h2></div>
+                <div><h2 id="graph-title">{granularity[0]!.toUpperCase() + granularity.slice(1)} view</h2></div>
                 <div className="granularity-toggle" role="group" aria-label="Graph granularity">
                   {GRANULARITIES.map((entry) => <button key={entry} type="button" aria-pressed={entry === granularity} onClick={() => { setGranularity(entry); setSelectedNodeId(null); setSelectedFindingId(null); resetGraph(); }}>{entry[0]!.toUpperCase() + entry.slice(1)}</button>)}
                 </div>
@@ -198,7 +198,7 @@ export function App() {
             </section>
 
             <section className="module-panel panel" aria-labelledby="modules-title">
-              <div className="panel-header"><div><p className="eyebrow">Browse the graph</p><h2 id="modules-title">Modules <span className="count-badge">{sortedNodes.length}</span></h2></div><span className="muted small">Select a path to inspect its dependencies</span></div>
+              <div className="panel-header"><div><h2 id="modules-title">Modules <span className="count-badge">{sortedNodes.length}</span></h2></div></div>
               <div className="module-table-wrap">
                 <table className="module-table"><thead><tr><th scope="col">Path</th><th scope="col" title="Incoming edges">In</th><th scope="col" title="Outgoing edges">Out</th></tr></thead><tbody>
                   {sortedNodes.map((node) => <tr key={node.id} className={node.id === selectedNodeId ? 'selected-module' : ''}><td><button type="button" aria-pressed={node.id === selectedNodeId} onClick={() => selectNode(node.id)}><span className="module-icon" aria-hidden="true">{node.kind === 'file' ? '◇' : '▱'}</span><span>{node.path}</span>{node.isPublicEntrypoint ? <span className="entrypoint-tag">public</span> : null}</button></td><td>{node.fanIn}</td><td>{node.fanOut}</td></tr>)}
@@ -210,7 +210,7 @@ export function App() {
 
           <aside className="inspector-column" aria-label="Findings and details">
             <section className="panel findings-panel" aria-labelledby="findings-title">
-              <div className="panel-header"><div><p className="eyebrow">Review queue</p><h2 id="findings-title">Findings <span className="count-badge">{findings.length}</span></h2></div><span className="muted small">Severity first</span></div>
+              <div className="panel-header"><div><h2 id="findings-title">Findings <span className="count-badge">{findings.length}</span></h2></div></div>
               <div className="finding-filters">
                 <label className="search-field"><span aria-hidden="true">⌕</span><input type="search" aria-label="Search findings" placeholder="Search findings…" value={findingSearch} onChange={(event) => setFindingSearch(event.target.value)} /></label>
                 <div className="filter-selects"><select aria-label="Filter finding type" value={findingType} onChange={(event) => setFindingType(event.target.value)}><option value="all">All finding types</option>{Object.entries(FINDING_LABELS).map(([type, label]) => <option key={type} value={type}>{label} ({findings.filter((finding) => finding.type === type).length})</option>)}</select><select aria-label="Filter severity" value={severity} onChange={(event) => setSeverity(event.target.value)}><option value="all">All severities</option><option value="high">High</option><option value="warn">Warning</option><option value="info">Info</option></select></div>
@@ -223,7 +223,7 @@ export function App() {
             </section>
 
             <section className="panel inspector-panel" aria-labelledby="detail-title">
-              <div className="panel-header"><div><p className="eyebrow">Inspector</p><h2 id="detail-title">{selectedFinding ? 'Finding detail' : selectedNode ? 'Node detail' : 'Select a module or finding'}</h2></div></div>
+              <div className="panel-header"><div><h2 id="detail-title">{selectedFinding ? 'Finding detail' : selectedNode ? 'Node detail' : 'Select a module or finding'}</h2></div></div>
               {selectedFinding ? <div className="finding-card">
                 <span className={`severity-chip severity-${selectedFinding.severity}`}>{selectedFinding.severity === 'warn' ? 'warning' : selectedFinding.severity}</span>
                 <h3>{selectedFinding.title}</h3><p>{selectedFinding.summary}</p>
@@ -242,7 +242,7 @@ export function App() {
           </aside>
         </section>
       </> : <section className="welcome-panel panel"><h2>Open a local architecture report</h2><p>Generate a report from a TypeScript or JavaScript repository, then open its JSON file here.</p><code>boundary-atlas analyze ./repo --json report.json</code></section>}
-      <footer className="atlas-footer"><span>Boundary Atlas · TS/JS static analysis</span><span>Report files are read in this browser. No uploads or telemetry.</span></footer>
+      <footer className="atlas-footer"><span>Tutte · TS/JS static analysis</span><span>Local report · No uploads</span></footer>
     </main>
   );
 }
