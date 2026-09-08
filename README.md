@@ -4,17 +4,17 @@
 
 Boundary Atlas is a static import analyzer for TypeScript and JavaScript repositories. It parses real imports with `ts-morph`, builds file, folder, and package graphs, and turns them into findings you can export as JSON, Markdown, or an offline HTML viewer.
 
-## What It Catches
+## Detectors
 
-| Signal | What Boundary Atlas flags | Why it matters |
-| --- | --- | --- |
-| Cycles | strongly connected file, folder, or package graphs | change direction stops being obvious and unrelated work starts moving together |
-| Deep imports | imports that bypass a public entrypoint and reach into internals | a private refactor can break another area without any API change |
-| Boundary violations | imports that cross a configured allow-list boundary | architecture rules stop being real once they are unenforced |
-| Cross-feature dependencies | one feature reaching into several peer features | ownership blurs and coordinated releases become more likely |
-| Dead exports | exports that are not imported or re-exported internally | stale surface area makes real API harder to recognize |
-| Hotspots | nodes with unusually high fan-in or fan-out | churn concentrates around the same files and folders |
-| Git drift | findings and hotspots added or removed between two refs | architectural regression becomes visible in code review windows |
+| Signal | What Boundary Atlas flags |
+| --- | --- |
+| Cycles | strongly connected file, folder, or package graphs |
+| Deep imports | imports that bypass a public entrypoint and reach into internals |
+| Boundary violations | imports that cross a configured allow-list boundary |
+| Cross-feature dependencies | one feature importing from several peer features |
+| Dead exports | exports that are not imported or re-exported internally |
+| Hotspots | nodes with unusually high fan-in or fan-out |
+| Git drift | findings and hotspots added or removed between two refs |
 
 ## Example output
 
@@ -24,7 +24,7 @@ Bundled fixtures show the detectors on small example repositories.
 - Fixture catalog: [`fixtures/README.md`](fixtures/README.md)
 - Default web demo report: `ts-cross-feature-portal`, preloaded in the viewer with a high-severity finding selected
 
-The viewer supports the full review loop:
+In the viewer you can:
 
 - Search module paths or import specifiers in file, folder, and package graphs. Matching import specifiers keep both endpoints visible.
 - Select a module from the graph or the keyboard-accessible path table, follow incoming and outgoing dependencies, and focus its direct neighborhood.
@@ -158,12 +158,12 @@ Example:
 - `packages/core`: graph extraction, detectors, and report rendering
 - `packages/cli`: `analyze` and `diff` commands plus JSON, Markdown, and HTML export
 - `apps/web`: offline report viewer built with React and Vite
-- `fixtures`: intentionally flawed repos that prove each detector fires on real source structure
-- `docs/samples`: committed output proof for fixtures and self-analysis
+- `fixtures`: example repositories for the detectors
+- `docs/samples`: saved reports for fixtures and self-analysis
 
 ## Demo Regeneration
 
-Refresh the committed proof artifacts:
+Regenerate the saved reports and screenshots:
 
 ```bash
 npm run build
