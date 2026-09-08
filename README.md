@@ -1,4 +1,4 @@
-# Depgraph
+# Import Graph
 
 [Open the live demo](https://dicnunz.github.io/demos/boundary-atlas/)
 
