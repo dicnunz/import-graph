@@ -126,7 +126,6 @@ export function App() {
   const selectNode = (id: string) => {
     setSelectedNodeId(id);
     setSelectedFindingId(null);
-    setSearch('');
     if (focus === 'finding') setFocus('neighbors');
   };
   const selectFinding = (finding: BoundaryAtlasFinding) => {
@@ -142,9 +141,9 @@ export function App() {
   return (
     <main className="atlas-shell">
       <header className="atlas-header">
-        <a className="brand" href="#workspace" aria-label="Tutte report workspace">
+        <a className="brand" href="#workspace" aria-label="Import Graph report workspace">
           <img src="./mark.svg" alt="" width="34" height="34" />
-          <span>Tutte<small>Import graph</small></span>
+          <span>Import Graph</span>
         </a>
         <div className="atlas-actions">
           <span className="local-badge"><i /> Local report viewer</span>
@@ -242,7 +241,7 @@ export function App() {
           </aside>
         </section>
       </> : <section className="welcome-panel panel"><h2>Open a local architecture report</h2><p>Generate a report from a TypeScript or JavaScript repository, then open its JSON file here.</p><code>boundary-atlas analyze ./repo --json report.json</code></section>}
-      <footer className="atlas-footer"><span>Tutte · TS/JS static analysis</span><span>Local report · No uploads</span></footer>
+      <footer className="atlas-footer"><span>Import Graph · TS/JS static analysis</span><span>Local report · No uploads</span></footer>
     </main>
   );
 }

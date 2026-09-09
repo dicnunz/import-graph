@@ -10,7 +10,7 @@ test.describe('Boundary Atlas report viewer', () => {
     page.on('pageerror', (error) => errors.push(error.message));
     page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
     await page.goto('/');
-    await expect(page).toHaveTitle(/Tutte/i);
+    await expect(page).toHaveTitle(/Import Graph/i);
     await expect(page.getByRole('heading', { name: 'ts-cross-feature-portal', exact: true })).toBeVisible();
     await expect(page.getByText('9 of 9 nodes · 10 edges', { exact: true })).toBeVisible();
     await expect(page.locator('.finding-card h3')).toContainText('Cross-feature fan-out from src/features/checkout');
@@ -151,4 +151,16 @@ test.describe('Boundary Atlas report viewer', () => {
     await expect(page.getByRole('heading', { name: 'Package view', exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Open report JSON', exact: true })).toBeVisible();
   });
+});
+
+test('keeps a module search in place while inspecting a keyboard selection', async ({ page }) => {
+  await page.goto('/');
+  const search = page.getByRole('searchbox', { name: 'Search modules or import specifiers' });
+  await search.fill('build-daily-brief.ts');
+  const module = page.locator('.module-table button').first();
+  await module.focus();
+  await page.keyboard.press('Enter');
+  await expect(search).toHaveValue('build-daily-brief.ts');
+  await expect(module).toHaveAttribute('aria-pressed', 'true');
+  await expect(module).toBeFocused();
 });
