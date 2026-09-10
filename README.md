@@ -57,4 +57,4 @@ npx playwright install chromium
 npm run e2e
 ```
 
-Verification includes fixture analysis and analysis of this repository. [Saved outputs](docs/samples/README.md) show the inputs and resulting findings. The browser tests run separately. This is an AI-assisted personal project; these examples and tests do not establish production use.
+Verification includes fixture analysis and analysis of this repository. [Saved outputs](docs/samples/README.md) show the inputs and resulting findings. The browser tests run separately.
