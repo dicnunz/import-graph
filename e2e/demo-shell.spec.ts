@@ -144,7 +144,7 @@ test.describe('Boundary Atlas report viewer', () => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
     await expect(page.locator('canvas')).toBeVisible();
-    const dimensions = await page.evaluate(() => ({ width: document.documentElement.clientWidth, content: document.documentElement.scrollWidth, canvas: document.querySelector('canvas')!.getBoundingClientRect().width, panel: document.querySelector('.graph-frame')!.getBoundingClientRect().width }));
+    const dimensions = await page.evaluate(() => ({ width: document.documentElement.clientWidth, content: document.documentElement.scrollWidth, canvas: document.querySelector('canvas')!.getBoundingClientRect().width, panel: document.querySelector('.graph-frame')!.clientWidth }));
     expect(dimensions.content).toBeLessThanOrEqual(dimensions.width);
     expect(Math.abs(dimensions.canvas - dimensions.panel)).toBeLessThan(2);
     await page.getByRole('button', { name: 'Package', exact: true }).click();

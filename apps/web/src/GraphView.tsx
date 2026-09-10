@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { placeLabel, LabelIndex } from './graph-labels.js';
 import ForceGraph2D, { type ForceGraphMethods } from 'react-force-graph-2d';
 import type { BoundaryAtlasGraph, BoundaryAtlasGraphNode } from './report-types.js';
 
@@ -69,6 +70,44 @@ export function GraphView({ graph, highlightedIds, selectedNodeId, onSelect, onR
               if (!fitted.current) { fit(); fitted.current = true; }
             }}
             onNodeClick={(node) => onSelect(node.id)}
+            onRenderFramePost={(context, scale) => {
+              const positioned = data.nodes as Array<BoundaryAtlasGraphNode & { x?: number; y?: number }>;
+              const fontSize = 12 / scale;
+              const labelHeight = 18 / scale;
+              const occupied = new LabelIndex(64 / scale);
+              // Render labels only for visible nodes. All nodes remain in the graph and module list.
+              const visible = positioned.filter(node => {
+                const screen = engine.current?.graph2ScreenCoords(node.x ?? 0, node.y ?? 0);
+                return screen && screen.x >= 0 && screen.y >= 0 && screen.x <= size.width && screen.y <= size.height;
+              });
+              visible.forEach(node => occupied.add({ x: (node.x ?? 0) - 8, y: (node.y ?? 0) - 8, width: 16, height: 16 }));
+              context.font = `${fontSize}px ui-monospace, monospace`;
+              // Keep interaction work bounded at overview scale; selection and finding evidence take priority.
+              const ordered = visible.filter(node => scale > 0.6 || highlightedIds.has(node.id) || node.id === selectedNodeId)
+                .sort((a, b) => Number(b.id === selectedNodeId) - Number(a.id === selectedNodeId)
+                  || Number(highlightedIds.has(b.id)) - Number(highlightedIds.has(a.id)) || a.path.localeCompare(b.path)).slice(0, 96);
+              for (const node of ordered) {
+                const highlighted = highlightedIds.has(node.id) || node.id === selectedNodeId;
+                if (scale <= 0.6 && !highlighted) continue;
+                const label = node.path.split('/').slice(-2).join('/');
+                const width = context.measureText(label).width + 6 / scale;
+                const rect = placeLabel(node.x ?? 0, node.y ?? 0, width, labelHeight, highlighted ? 6 : 4.5, occupied);
+                occupied.add(rect);
+                if (Math.abs(rect.y + labelHeight / 2 - (node.y ?? 0)) > labelHeight / 2) {
+                  context.beginPath();
+                  context.moveTo(node.x ?? 0, node.y ?? 0);
+                  context.lineTo(rect.x < (node.x ?? 0) ? rect.x + width : rect.x, rect.y + labelHeight / 2);
+                  context.strokeStyle = '#8c959f';
+                  context.lineWidth = 1 / scale;
+                  context.stroke();
+                }
+                context.fillStyle = '#f6f8fa';
+                context.fillRect(rect.x, rect.y, width, labelHeight);
+                context.fillStyle = highlighted ? '#173f51' : '#4b6e7d';
+                context.textBaseline = 'middle';
+                context.fillText(label, rect.x + 3 / scale, rect.y + labelHeight / 2);
+              }
+            }}
             nodeCanvasObject={(node, context, scale) => {
               const highlighted = highlightedIds.has(node.id) || node.id === selectedNodeId;
               const radius = highlighted ? 6 : 4.5;
@@ -86,13 +125,7 @@ export function GraphView({ graph, highlightedIds, selectedNodeId, onSelect, onR
                 context.lineWidth = 1 / scale;
                 context.stroke();
               }
-              if (scale > 0.6 || highlighted) {
-                const fontSize = 11 / scale;
-                const label = node.path.split('/').slice(-2).join('/');
-                context.font = `${fontSize}px ui-monospace, monospace`;
-                context.fillStyle = highlighted ? '#173f51' : '#4b6e7d';
-                context.fillText(label, (node.x ?? 0) + radius + 3, (node.y ?? 0) + fontSize / 3);
-              }
+
             }}
           />
         ) : null}
